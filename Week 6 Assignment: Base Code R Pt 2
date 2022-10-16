@@ -1,0 +1,59 @@
+---
+title: 'R Base Code Assignment # 3'
+author: "Connor Prok"
+date: "2022-10-16"
+output: html_document
+---
+## Creating Functions
+1. Create a function that can be used to determine if Britney Spears sang the song. 
+```{r}
+BritneySing <- function(song){
+  for (i in 1:nrow(billboard)){
+    if(billboard$artist[i] == "Britney Spears"){
+      billboard$wasItBritney[i]<- "Yes!"
+    }
+    else(billboard$wasItBritney[i]<- "No")
+  }
+}
+```
+
+2. Test your function on the billboard data. Save the results to a new column called "wasItBritney"
+```{r}
+billboard$wasItBritney <- NA
+BritneySing(billboard$song)
+```
+
+##
+1. Open the tidyverse library.
+```{r}
+library("tidyverse")
+```
+
+2. open the billboard dataset
+```{r}
+view(billboard)
+data(billboard)
+```
+
+## For loops
+1. Use a for loop to determine if a song placed 50 or below or placed above 50 during the first week. 
+```{r}
+billboard$tophalf <- NA
+for(i in 1:nrow(billboard)){
+  if(billboard$wk1[i] <= 50){
+    (billboard$tophalf[i] <- "yes")
+  }
+  else(billboard$tophalf[i] <- "no")
+}
+```
+
+2. Use an if else statement to determine the same information as you obtained with the for loop. 
+```{r}
+ifelse(billboard$wk1<50, "yes", "no")
+```
+
+3. Compare your results. 
+```{r}
+#In the for loop action, it was automatically applied to the newly created column whether or not a song was in the top 50 songs on the first week on the billboard. However, in the ifelse statement, you are able to see all the results compared to it being in column view. This may come more useful if you need to conveniently or quickly look at the overall distribution of answers, compared with manipulating/adding data and descriptors such as the for loop did. 
+```
+
