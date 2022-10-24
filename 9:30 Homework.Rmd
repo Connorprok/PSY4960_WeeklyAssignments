@@ -12,13 +12,13 @@ Main panel - where all your code and information is located. Shows you what you 
 Bottom left -The console which runs a lot of the "behind the scenes" information. Install packages and run code that doesn't affect the main terminal. "Scratch paper".
 Top right - Has everything and is an overview of the console. Contains data, datasets, vectors, variables, etc. Tutorials and history as well
 Bottom right - Basically has everything else including tons of information on different packages and how different functions in R work and function. 
-
+#√
 2. Create a code chunk. Write your favorite number in it. 
 
 ```{r}
 8
 ```
-
+#√
 
 3. Add thirty-seven to six
 
@@ -26,26 +26,26 @@ Bottom right - Basically has everything else including tons of information on di
 6+37
 ```
 
-
+#√
 4. evaluate the following: six times four is equal to twenty-four
 
 ```{r}
 6*4 == 24
 #True
 ```
-
+#√
 
 5. What's the difference between an "and" and an "or" statement? 
 
 An "and" statement will be based on true/false based on both conditional statements while an "or" statement depends on only one being true to be labeled as true. For example, a building is a structure and a car is a delectable will come back with a false message because of the second statement. Meanwhile if you run this with an "or" statement, it would come back true (theoretically, with some manipulations to the variables)
-
+#√
 6. Create an "and" statement for the following sentence: three is less than five and tree is the same as oak. 
 
 ```{r}
 3 < 5 & "tree" == "oak"
 #False
 ```
-
+#√
 
 7. Create a variable called "dinner" that contains your favorite thing to eat for dinner. 
 
@@ -53,21 +53,21 @@ An "and" statement will be based on true/false based on both conditional stateme
 dinner <- "steak"
 dinner
 ```
-
+#√
 
 8. write out all numbers between 50 and 200
 
 ```{r}
 50:200
 ```
-
+#√
 
 9. print every odd number between 1 and 300. 
 
 ```{r}
 seq(1, 300, 2)
 ```
-
+#√
 
 10. repeat the phrase "i'm excited for fall" five times
 
@@ -75,3 +75,4 @@ seq(1, 300, 2)
 rep("I'm excited for fall", 5)
 ```
 
+#√
