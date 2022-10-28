@@ -10,15 +10,15 @@ output: html_document
 ```{r}
 library("tidyverse")
 ```
-
+#√
 
 2. Load the billboard data. 
 
 ```{r}
-show(billboard)
-view(billboard)
+show(billboard) # i usually use data()
+#View(billboard)- need to comment out so it knits
 ```
-
+#√
 
 3. What type of data is this? (e.g. describe what's in the dataset.)
 
@@ -29,21 +29,21 @@ class(billboard$date.entered)
 class(billboard$wk1)
 #This dataset includes character, date, and numeric data. Character is used to describe both the artist and track, the date is the date it was entered into the charts, and the numeric data goes from 1-100/NA on its position on the charts
 ```
-
+#?billboard 
 
 4. Print the column names from this dataset. 
 
 ```{r}
 colnames(billboard)
 ```
-
+#√
 
 5. Print the first 5 entries in the dataset. 
 
 ```{r}
 head(billboard, 5)
 ```
-
+#√
 
 
 # Practice
@@ -54,7 +54,7 @@ JayZ<-subset(billboard, artist=="Jay-Z")
 nrow(JayZ)
 #Jay-Z has had 5 songs make the top billboard's chart in 2000
 ```
-
+#√
 
 2. In the original dataset, use filter to find information about the song "All the small things." What was the highest position this song reached on the billboard 100? 
 
@@ -63,7 +63,7 @@ ATST<-billboard %>% filter(track=="All The Small Things")
 show(ATST)
 #The highest spot it reached on the billboard was #6
 ```
-
+#√
 
 3. Create a subset of data for songs Tim McGraw sang. Summarize the data for wk 1.
 
@@ -73,4 +73,4 @@ data.frame(TM)
 summary(TM$wk1)
 #Mean rating for week 1 was 78th with the highest position being 73rd and the lowest position being 85
 ```
-
+#√
