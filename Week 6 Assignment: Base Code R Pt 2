@@ -16,25 +16,25 @@ BritneySing <- function(song){
   }
 }
 ```
-
+#√
 2. Test your function on the billboard data. Save the results to a new column called "wasItBritney"
 ```{r}
-billboard$wasItBritney <- NA
-BritneySing(billboard$song)
+billboard$wasItBritney <- BritneySing(billboard$song)
 ```
+#√
 
 ##
 1. Open the tidyverse library.
 ```{r}
 library("tidyverse")
 ```
-
+#√
 2. open the billboard dataset
 ```{r}
-view(billboard)
 data(billboard)
+#view(billboard)
 ```
-
+#√
 ## For loops
 1. Use a for loop to determine if a song placed 50 or below or placed above 50 during the first week. 
 ```{r}
@@ -46,14 +46,12 @@ for(i in 1:nrow(billboard)){
   else(billboard$tophalf[i] <- "no")
 }
 ```
-
+#√
 2. Use an if else statement to determine the same information as you obtained with the for loop. 
 ```{r}
 ifelse(billboard$wk1<50, "yes", "no")
 ```
-
+#√
 3. Compare your results. 
-```{r}
-#In the for loop action, it was automatically applied to the newly created column whether or not a song was in the top 50 songs on the first week on the billboard. However, in the ifelse statement, you are able to see all the results compared to it being in column view. This may come more useful if you need to conveniently or quickly look at the overall distribution of answers, compared with manipulating/adding data and descriptors such as the for loop did. 
-```
-
+In the for loop action, it was automatically applied to the newly created column whether or not a song was in the top 50 songs on the first week on the billboard. However, in the ifelse statement, you are able to see all the results compared to it being in column view. This may come more useful if you need to conveniently or quickly look at the overall distribution of answers, compared with manipulating/adding data and descriptors such as the for loop did. 
+#√
