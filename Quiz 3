@@ -1,0 +1,85 @@
+title: "Quiz 3"
+author: "Connor Prok"
+date: "2022-11-04"
+output: html_document
+---
+1. Load the spotify dataset (available on Canvas).
+
+```{r}
+library("ggplot2")
+library("tidyverse")
+library(RColorBrewer)
+library(viridis)
+SpotDat <- read.csv("~/Downloads/spotifyDat.csv")
+SpotDat
+```
+
+
+2. Create a bar graph of the artist column (Hint: use theme(axis.text.x = element_text(angle = 90)) to rotate the x axis).
+
+```{r}
+ggplot(SpotDat, aes(artist)) + geom_bar() + theme(axis.text.x=element_text(angle=90, size=0.9)) + xlab("Artist" ) + ylab("Count of Number \n Of Songs") + ggtitle("Spotify Artists and Amount \n of Songs Analyzed")
+#Created bar graph of artists which shows count of songs they had analyzed in the dataset. Decreased size of text on x-axis to more-aesthetically pleasing but really doesn't help with amount artists. 
+```
+
+
+3. Add genre as a third variable in your graph.
+
+```{r}
+SpotDat$genre <- as.factor(SpotDat$genre)
+levels(SpotDat$genre)
+levels(SpotDat$genre) <- c("country", "country", "easy listening", "folk/acoustic", "folk/acoustic", "folk/acoustic", "hip hop", "hip hop", "hip hop", "hip hop", "hip hop", "hip hop","hip hop","hip hop","hip hop","hip hop","hip hop","hip hop","hip hop","hip hop","latin", "metal", "pop","pop","pop","pop","pop","pop","pop","pop","pop","pop","pop","pop","pop","pop","R&B", "rock","rock","rock","rock","rock","rock","rock","rock","rock","rock","rock","rock","rock","rock","rock", "set()", "World/Tradional","World/Tradional","World/Tradional","World/Tradional","World/Tradional","World/Tradional")
+ggplot(SpotDat, aes(artist, color=as.factor(genre))) + geom_bar() + theme(axis.text.x=element_text(angle=90, size=0.9)) + scale_color_discrete(name = "Genre of music") + xlab("Artist" ) + ylab("Count of Number \n Of Songs") + ggtitle("Spotify Artists and Amount \n of Songs Analyzed")
+#There were 40+ different character levels of the genre column so I broke it down into 11 columns to not only (1) make it easier to read, because the legend took up the console view, but (2) show the distribution of music better. 
+```
+
+
+4. Use color brewer to add color to your graph in 3. 
+
+```{r}
+ggplot(SpotDat, aes(artist, color=as.factor(genre))) + geom_bar() + theme(axis.text.x=element_text(angle=90, size=0.9)) + scale_color_brewer(palette="Spectral") + scale_color_discrete(name = "Genre of music") + xlab("Artist" ) + ylab("Count of Number \n Of Songs") + ggtitle("Spotify Artists and Amount \n of Songs Analyzed")
+```
+
+
+5. Place the legend for the graph you made in 3 on the bottom of the graph. 
+
+```{r}
+ggplot(SpotDat, aes(artist, color=as.factor(genre))) + geom_bar() + theme(axis.text.x=element_text(angle=90, size=0.9)) + scale_color_brewer(palette="YlOrRd") + theme(legend.position="bottom") + scale_color_discrete(name = "Genre of music") + xlab("Artist" ) + ylab("Count of Number \n Of Songs") + ggtitle("Spotify Artists and Amount \n of Songs Analyzed")
+```
+
+
+
+As you probably recognized, the graph you made is really hard to read.
+6. Separate the genre column into multiple columns (e.g. so each genre listed is in a unique column)
+
+```{r}
+ggplot(SpotDat, aes(genre)) + geom_bar(fill="gray") + xlab("Genre" ) + ylab("Count of Number \n Of Songs") + ggtitle("Genres and Amount of \n Songs Analyzed") + scale_color_brewer(palette="RdGy") + theme_classic() + theme(axis.text.x = element_text(angle = 90))
+```
+
+
+7.use facet wrap to make graphs of artist by genre 
+
+```{r}
+SpotDatGenreGraph <- ggplot(SpotDat, aes(artist, color=as.factor(genre))) + geom_bar() + theme(legend.position="bottom") + scale_color_discrete(name = "Genre of music") + xlab("Artist" ) + ylab("Count of Number \n Of Songs") + ggtitle("Spotify Artists and Amount \n of Songs Analyzed By Genre") + theme(axis.text.x = element_text(size=9))
+SpotDatGenreGraph + facet_wrap(~genre)
+
+```
+
+8. Create a graph that includes the variables tempo and dancability. 
+
+```{r}
+ggplot(SpotDat, aes(tempo, danceability)) + geom_point() + xlab("Tempo of Song") + ylab("Danceability of Song")
+```
+
+
+9. Add popularity as a third variable. 
+
+```{r}
+ggplot(SpotDat, aes(tempo, danceability, color=as.factor(popularity))) + geom_point() + theme(legend.key.size=unit(0.25, 'cm')) + xlab("Tempo of Song") + ylab("Danceability of Song") + scale_color_discrete("Popularity(0-89)") + ggtitle("Scatterplot of Tempo and Danceability of Music with Popularity as a Third Variable")
+```
+
+10. Use viridis as a color in your graph from #8 
+
+```{r}
+ggplot(SpotDat, aes(tempo, danceability, color=as.factor(popularity))) + geom_point() + theme(legend.key.size=unit(0.25, 'cm')) + xlab("Tempo of Song") + ylab("Danceability of Song") + scale_color_discrete("Popularity(0-89)") + ggtitle("Scatterplot of Tempo and Danceability of Music with Popularity as a Third Variable") + scale_color_viridis(discrete = TRUE, option= "C") + scale_color_discrete("Popularity(0-89)")
+```
