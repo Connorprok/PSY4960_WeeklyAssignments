@@ -1,0 +1,94 @@
+---
+title: "Weekly Assignment 10"
+author: "Connor Prok"
+date: "2022-11-17"
+output: html_document
+---
+
+1. Open the diamonds dataset from ggplot2.   
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(car)
+data(diamonds)
+```
+
+
+2. Run a correlation between the x and y variables. What do you notice? 
+
+```{r}
+cor(diamonds$x, diamonds$y)
+cor.test(diamonds$x, diamonds$y)
+ggplot(diamonds, aes(x, y)) + geom_point() + geom_smooth(method="lm")
+#There is a strong and positive correlation between the variables of "x" and "y". There are a few outliers that affect the correlation somewhat, but correlation is still strong. Running a test, p-value is significantly below a 0.05 significant threshold. 
+```
+
+
+3. What is the correlation between price and carat?
+
+```{r}
+cor(diamonds$price, diamonds$carat)
+cor.test(diamonds$price, diamonds$carat)
+ggplot(diamonds, aes(price, carat)) + geom_point() + geom_smooth(method="lm")
+#There is a strong and positive correlation between price and carat. P-value is significantly below 0.05 significance threshold. 
+```
+
+
+4. Create a linear model predicting price from table. What is the coefficient for table? 
+
+```{r}
+LMPT <- lm(price ~ table, data=diamonds)
+summary(LMPT)
+ggplot(diamonds, aes(table, price)) + geom_point() + geom_smooth(method="lm")
+#The coefficient for table is 226.98 with a standard error of 7.625
+```
+
+
+5. Run a regression and an Anova predicting price from color. What do you notice about the two types of output? 
+
+```{r}
+lm(price~color, data=diamonds)
+
+aov(price~color, data=diamonds)
+
+#In the regression output, there is more information about each kind of color and the different coefficients each has in predicting price. The anova function shows color as one holistic variable which accumulates to an extremely large value of sum of squares in both color and residuals. The Anova function also lists degrees of freedom as compared to the regression which does not.  
+```
+
+
+6. Run a t test to determine if "D" color diamonds are more expensive than "E" color diamonds. 
+
+```{r}
+DiamondsD <- diamonds %>% filter(color=="D")
+DiamondsE <- diamonds %>% filter(color=="E")
+t.test(DiamondsD$price, DiamondsE$price, paired=FALSE, alternative="greater")
+#yes, p-value under 0.05 and can see that means of x and y, x(DiamondsD) is a higher mean price than y(DiamondsE)
+```
+
+
+7. Open the warpbreaks dataset. What test would you use to determine the correlation between wool type and breaks?
+
+```{r}
+data(warpbreaks)
+class(warpbreaks$breaks)
+class(warpbreaks$wool)
+#I would use a biserial correlation test because wool types and breaks are factor and numeric classes, respectively. In wool types, there is either "A" or "B" wool types making it biserial. 
+```
+
+
+8. What is the correlation between wool type and breaks? 
+
+```{r}
+biserial.cor(warpbreaks$breaks, warpbreaks$wool)
+ggplot(warpbreaks, aes(wool, breaks)) + geom_point() + geom_smooth(method="lm")
+#0.22 correlation between wool type and breaks. Positive but weak
+```
+
+
+9. A student has a 35 question, multiple choice test. Each question has 4 choices. If they answered 17 questions correctly, did their responses differ from chance?  
+
+```{r}
+binom.test(17, 35, 0.25)
+#Yes, their answers did differ by chance as we would reject the null hypothesis that there is no difference between chance and the 17 questions the student got right. There is also a 95% confidence interval that does not contain our true probability(25%) which means theres a high chance it lays outside of the range of the observed probability. 
+```
+
