@@ -1,0 +1,102 @@
+---
+title: "Quiz 4"
+author: "Connor Prok"
+date: "2022-11-08"
+output: html_document
+---
+
+1. open the mtcars dataset.
+
+```{r}
+library(ggplot2)
+data(mtcars)
+```
+
+
+2. Find the correlation between mpg and hp.
+
+```{r}
+cor(mtcars$mpg, mtcars$hp)
+cor.test(mtcars$mpg, mtcars$hp)
+#Correlation is -0.776, indicating a strong and negative correlation. 
+```
+
+
+3. Create a scatterplot that matches your statistic in #2. 
+
+```{r}
+ggplot(mtcars, aes(mpg, hp)) + geom_point() + geom_smooth(method="lm") + xlab("Miles Per Gallon") + ylab("Horsepower") + theme_classic()
+```
+
+
+4. Find the correlation between am and mpg. Explain why you chose to use your specific function
+
+```{r}
+class(mtcars$am)
+class(mtcars$mpg)
+cor(mtcars$am, mtcars$mpg)
+cor.test(mtcars$am, mtcars$mpg)
+
+#I decided to run a normal cor function because both factors are numeric and we do not need to find any significance, even though I ran both to see if they matched with one another. 
+```
+
+
+5. Run a regression to predict mpg from disp.
+
+```{r}
+lm(mpg ~ disp, data=mtcars)
+lm_mpg_disp <- lm(mpg ~ disp, data=mtcars)
+summary(lm_mpg_disp)
+```
+
+
+6. Create a graph that displays your regression line. 
+
+```{r}
+ggplot(mtcars, aes(disp, mpg)) + geom_point() + geom_smooth(method="lm") + ylab("Miles Per Gallon") + xlab("Displacement \n (Cubic Inch)") + theme_classic()
+```
+
+
+7. Run a t test to compare the horse power of automatic and manual transmission cars. 
+
+```{r}
+Manual <- mtcars %>% filter(am=="1")
+Transmission <- mtcars %>%  filter(am=="0")
+t.test(Manual$hp, Transmission$hp, paired=FALSE, var.equal=TRUE)
+#The t-test produced a test statistics of -1.3733 and a correlating p-value of 0.1798. We fail to reject a (hypothetical) null hypothesis in this case and say there may be a possibility that the two types of transmission might have the same mean number of horsepower. There is statistical evidence that there may be no difference between the true means of horsepower between each transmission type. 
+```
+
+
+8. Create a graph that accompanies your statistic in #6.
+
+```{r}
+ggplot(mtcars, aes(hp, color=as.factor(am))) + geom_histogram() + theme(legend.position="top") + scale_color_discrete(name="Transmission \n (0=Auto, 1=Manual)") + theme_classic() + xlab("Horsepower") + ylab("Count") + geom_vline(xintercept=mean(Transmission$price)) + geom_vline(xintercept=mean(Manual$price))
+```
+
+
+9. Run an ANOVA to predict disp from gear. 
+
+```{r}
+aov(disp ~ gear, mtcars)
+
+#or
+
+library(car)
+LmDisp <- lm(disp ~ gear, data=mtcars)
+Anova(LmDisp)
+```
+
+
+10. You have a multiple choice test that is 25 questions with 5 potential options. What type of test can you run to determine if your score of 16/25 differs from chance? 
+
+```{r}
+#I would use a binomial test because it will be useful to tell if obtaining the actual score of 16/25 is due to chance or if there is some unpredictability behind it. Whether it is due to chance or not. 
+```
+
+
+11. Run the test you described in #10
+
+```{r}
+binom.test(16, 25, 0.2)
+#There is a very low p-value of 2.064x10^-6 which means that we would reject a null hypothesis and conclude that there is statistical evidence to show that a 16/25 is not due to chance. 
+```
