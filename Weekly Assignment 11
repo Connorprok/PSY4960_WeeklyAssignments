@@ -1,0 +1,129 @@
+
+1. First, find the mean, median, and mode of the "table" column of the Diamonds dataset. Then create a histogram of the data presented in the "table" column, change elements of graph to best describe it. Figure out how to fix the error(s):
+```{r}
+data(diamonds)
+mean(diamonds$table)
+median(diamonds$table)
+mode(diamonds$table)
+
+library(ggplot2)
+ggplot(diamonds, aes(table)) + geom_point()  + xlab("count") + ylab("table") + theme_classic() + scale_color_brewer(2)
+```
+
+2. First open the ChickWeight dataset with the corresponding packages. Then change the dataset structure to wide by having each time recorded as its own column. Then find the average weight increase over time of chicks in diet 1. Figure out how to fix the error(s):
+```{r}
+library(car)
+data(ChickWeight)
+ChickWeightWide<- pivot_wider(ChickWeight, id_cols=c("Chick", "Diet"), names_from="Clock", values_from="Mass")
+ChickWeight1 <- ChickWeight %>% select(Diet==1)
+ggplot(ChickWeight1, aes(Time, weight)) + geom_scatter() + xlab("Time") + ylab("Weight")
+```
+
+3. Fix the mathematical/logical errors within the code chunk below:
+```{r}
+#Change either side to make the expression true:
+((6*25) - sqrt(25)) == ((50*64) - 3033)
+
+#Change each side to make it a true statement
+"Psychology is great!" =/= "Psychology is great!" & "Chocolate" == "Candy"
+
+#Change the expression to make it equal
+2^5 == 64
+```
+
+4. Open the starwars dataset. Run a summary function on those that are apart of the tatooine planet. Those from Tatooine, find how many characters have a birth year of exactly or over 50. Figure out how the fix the error(s): 
+```{r}
+data(starwars)
+Tatooine <- subset(starwars$homeworld=="Tatooine")
+summary(tatooine)
+TatOver50 <- Tatooine %>% select(birth_year <= 50)
+prow(TatOver50)
+```
+
+5. Open the mtcars dataset. Within the dataset, change the "am" column so instead of 0 and 1, it says automatic and manual. (Part 2)Imagine being in a contest for seven new cars. You are enrolled and you win all seven cars. What is the probability and does it differ from chance if you receive seven 6-cylinder engine cars? Imagine replacement is true. In this, create subsets, find the count, then find probability of situation occurring. Figure out how to the fix the error(s):
+```{r}
+#Part 1
+data(mtcars)
+class(mtcars$am)
+Am1 <- as.numeric(mtcars$am)
+levels(Am1)
+levels(Am1) <- c("Manual", "Automatic")
+levels(Am1)
+
+#Part 2
+Cyl4 <- mtcars %>% filter(cyl==4)
+Cyl6 <- mtcars %>% select(cyl==7)
+Cyl8 <- mtcars %>% filter(cyl==8)
+nrow(Cyl4)
+nrow(Cyl6)
+nrow(Cyl8)
+binom.test(7, 39, 0.218)
+```
+
+
+------
+
+
+1. Answer
+```{r}
+#The errors within this question: (1) need to open library package mfv to determine mode instead of the function mode. (2) needs to be geom_histogram() instead of geom_point(). (3/4) Xlab and ylab functions need to swap what is in the parenthesis/axises need to be swapped. 
+data(diamonds)
+mean(diamonds$table)
+median(diamonds$table)
+mode(diamonds$table)
+
+library(ggplot2)
+ggplot(diamonds, aes(table)) + geom_point()  + xlab("count") + ylab("table") + theme_classic() + scale_color_brewer(2)
+```
+
+2. Answer
+```{r}
+#(1) The ChickWeight dataset is located in the nlme package, not the car. (2) the column names in the pivot_wider function were changed so user has to change them back for it to work right. (3) you need the filter code, not the select code. (4) geom_line() should be used to show trends in average weight gain, not geom_scatter(). 
+library(nlme)
+data(ChickWeight)
+ChickWeightWide<- pivot_wider(ChickWeight, id_cols=c("Chick", "Diet"), names_from="Time", values_from="weight")
+ChickWeight1 <- ChickWeight %>% filter(Diet==1)
+ggplot(ChickWeight1, aes(Time, weight)) + geom_line()
+```
+
+3. Answer
+```{r}
+((6*25) - sqrt(25)) == ((50*64) - 3055)
+
+#(2) change the first expression to be equal and change the "candy" to chocolate in the second part of the equation
+"Psychology is great!" == "Psychology is great!" & "Chocolate" == "Chocolate"
+
+#(3) change the 64 to a 32 or the 5 to a 6
+2^5 == 32 | 2^6 == 64
+```
+
+4. Answer
+```{r}
+#(1) the second line, the subset function should be subset(starwars, homeworld=...), not starwars$homeworld. (2). You need to use filter function, not select. (3) You need to change it to greater or equal than 50, not less than or equal. (4) nrow, not prow for the last line
+data(starwars)
+Tatooine <- subset(starwars, homeworld=="Tatooine")
+summary(Tatooine)
+TatOver50 <- Tatooine %>% filter(birth_year >= 50)
+nrow(TatOver50)
+```
+
+5. Answer
+```{r}
+#(1) the third line of code should be as.factor, not as.numeric. (2) Automatic and Manual should be flipped around for values to match up to original data. (3) Select in third line of subsets instead of filter. (4) Binom test should be out of 32, not 39 which would be 7+32
+#Part 1
+data(mtcars)
+class(mtcars$am)
+Am1 <- as.factor(mtcars$am)
+levels(Am1)
+levels(Am1) <- c("Automatic", "Manual")
+levels(Am1)
+
+#Part 2
+Cyl4 <- mtcars %>% filter(cyl==4)
+Cyl6 <- mtcars %>% filter(cyl==6)
+Cyl8 <- mtcars %>% filter(cyl==8)
+nrow(Cyl4)
+nrow(Cyl6)
+nrow(Cyl8)
+binom.test(7, 32, 0.218)
+```
