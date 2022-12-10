@@ -1,0 +1,73 @@
+---
+title: "Optional Dataset Manipulation Quiz"
+author: "Connor Prok"
+date: "2022-12-10"
+output: html_document
+---
+This quiz is meant to help you synthesize materials we've covered in class. If you'd prefer to use other functions, that's okay too. 
+You should see the following variables: 
+subj- subject number
+condition- experimental or control
+stroop- an accuracy score for the stroop task (30 trials)
+nback- an accuracy score for the n back task (recalling a number/object a given number of trials back;50 trials)
+ravens- score on raven's progressive matrices (25 trials)
+
+People are assigned to either complete a cognitive training task (to improve memory) or to have no training. We have  
+
+Upload the psy4960-Quiz2.csv file.
+```{r}
+library(readr)
+datQuiz <- read.csv("~/Downloads/PSY4960-Quiz2.csv")
+```
+
+1. Take a summary of the full dataset.
+```{r}
+summary(datQuiz)
+```
+
+2. What kind of data do you have (wide or long?). How do you know?
+
+I have wide data because each subject appears and is represented once in the dataset and there are variables that show a before/after effect within the column names. For example, there is "t1_stroop" and then there is "t2_stroop" which would be different rows in a long dataset. 
+
+3. Check the type of data presented in the condition column. Make sure this variable is a factor
+```{r}
+class(datQuiz$condition)
+datQuiz$condition <- as.factor(datQuiz$condition)
+class(datQuiz$condition)
+```
+
+4. Create a new column called Stroop Accuracy.
+Label those who have a higher than average score at t1 "high EF", those below average "low EF" and those at average "Average EF" (Note: EF stands for executive function). 
+```{r}
+datQuiz$StroopAccuracy <- NA
+mean(datQuiz$t1_stroop)
+for(i in 1:nrow(datQuiz)){
+  if(datQuiz$t1_stroop[i]<16.61){
+    datQuiz$StroopAccuracy[i] <- "Low EF"
+  }
+  else(datQuiz$StroopAccuracy[i] <- "High EF")
+}
+#Not sure if there are any at average because all numbers are integers where the mean is an example of a decimal value. Unless the mean is supposed to be 16 - whole number. 
+```
+
+
+5. Create a dataset containing participants' nback scores in long format. (Note: you should keep all other variables)
+```{r}
+library(tidyverse)
+datQuizLong<-pivot_longer(datQuiz, cols = c("t1_nback", "t2_nback"), names_to="timePoint", values_to="nback_score")
+```
+
+6. Returning to the original dataset, create a column indicating the difference between the two ravens scores. 
+```{r}
+Difference <- function(column1, column2){
+  column1 - column2
+}
+datQuiz$DifferenceRaven <- Difference(datQuiz$t1_ravens, datQuiz$t2_ravens)
+```
+
+
+7. Based on #6, create two subsets of data: 1 where the ravens difference score is positive and one where it is negative
+```{r}
+PositiveDiff <- datQuiz %>% filter(DifferenceRaven>0)
+NegativeDiff <- datQuiz %>% filter(DifferenceRaven<0)
+```
