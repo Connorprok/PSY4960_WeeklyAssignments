@@ -11,64 +11,65 @@ library("tidyverse")
 data(starwars)
 library(viridis)
 ```
-
+#√
 2.Create a graph of character's eye color. (Hint: pay attention to the class of data)
 
 ```{r}
 class(starwars$eye_color)
 ggplot(starwars, aes(eye_color)) + geom_bar()
 ```
-
+#√
 3. Customize your graph to make it more presentable (consider axes, colors, themes)
 
 ```{r}
 ggplot(starwars, aes(eye_color))+ geom_bar(fill="bisque4", color="black") + xlab("Eye Color") + ylab("Amount of characters \n that has that color") + theme_gray()
 ```
-
+#√
 4. Create a graph of character's height versus mass.
 ```{r}
 ggplot(starwars, aes(height, mass)) + geom_point()
 ```
-
+#√
 5. Customize this graph to make it more presentable.
 ```{r}
 ggplot(starwars, aes(height, mass)) + geom_point(size=2) + xlab("Height(cm)") + ylab("Weight(kg)") + theme_classic() + scale_color_viridis(discrete = TRUE, option= "D")
 ```
-
+#√
 6. Create another graph of character's height and mass. Include sex as a third variable.  
 ```{r}
 ggplot(starwars, aes(height, mass, color=as.factor(sex))) + geom_point()
 ```
-
+#√
 7. Customize this graph to make it more presentable. 
 ```{r}
 ggplot(starwars, aes(height, mass, color=as.factor(sex))) + geom_point(size=2) + xlab("Height(cm)") + ylab("Weight(kg)") + theme_classic() + scale_color_viridis(discrete = TRUE, option= "A") + scale_color_discrete(name="Sex/Gender of Character")
 ```
-
+#√
 8. Make a boxplot of height. 
 ```{r}
 ggplot(starwars, aes(height)) + geom_boxplot()
 ```
-
+#√
 9. Make a boxplot of height for each species present in the data
 ```{r}
 ggplot(starwars, aes(height, species)) + geom_boxplot()
 ```
-
+#√
 10. Using any variables in the starwars dataset, create a graph that uses a color palette from viridis.
 ```{r}
 ggplot(starwars, aes(height, mass, color=as.factor(gender))) + geom_point() + scale_color_viridis(discrete = TRUE, option= "I")
 ```
-
+#√
 11.Using any variables in the starwars dataset, create a graph that uses a color palette from RColorBrewer.
 ```{r}
 ggplot(starwars, aes(height, mass, color=as.factor(gender))) + geom_point() + scale_color_brewer(palette= "YlOrRd")
 ```
-
+#√
 12. Using any variables in the starwars dataset, create a graph using facet_wrap
 ```{r}
 starwarsgraph<- ggplot(starwars, aes(height, mass, color=gender)) + geom_point() + theme(legend.position="Top") + scale_color_discrete(name="Gender")
 
 starwarsgraph + facet_wrap(~gender)
 ```
+#√
 
